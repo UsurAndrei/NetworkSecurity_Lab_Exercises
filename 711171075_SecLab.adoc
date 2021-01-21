@@ -1,6 +1,6 @@
 = Ασφάλεια Δικτύων και Επικοινωνιών
 Ρούσου Αντρέι - 711171075 - cs171075@uniwa.gr
-:toc: left
+:toc:
 
 == Εισαγωγή και Περιγραφή
 [INFO]
@@ -110,6 +110,18 @@ TIP: Στην περίπτωση που αναλύουμε, οι κάνονες 
 === Στιγμιότυπα οθόνης από προσομοίωση της επίθεσης
 
 Παρακάτω εμφανίζονται στιγμιότυπα οθόνης από προσομοίωση μιας SYN flood DDoS επίθεσης με τον τρόπου που περιγράψαμε. Η επίθεση γίνεται από δυο workers, τον worker 2 (172.19.0.4) και τον worker 3 (172.19.0.5) κατά του worker 1 (172.19.0.3).
+
+image::images/DDoS/ifconfig.png[]
+image::images/DDoS/nmap.png[]
+image::images/DDoS/nmap_showopenport.png[]
+image::images/DDoS/gettinginworker1.png[]
+image::images/DDoS/worker1_hping.png[]
+image::images/DDoS/worker2_hping.png[]
+image::images/DDoS/tcpdump.png[]
+image::images/DDoS/tcpdump_p22.pngp[]
+image::images/DDoS/tcpdumpSYN.png[]
+image::images/DDoS/iptablesblocked.png[]
+image::images/DDoS/iptablesblocked_packets.png[]
 
 == SSH Brute Force
 
@@ -263,6 +275,27 @@ TIP: Όλα τα δημόσια κλειδιά είναι αποθηκευμέν
 
 Παρακάτω εμφανίζονται στιγμιότυπα οθόνης απο μια προσομοίωση επίθεσης με βάση την παραπάνω ανάλυση. Ο worker 1 (172.19.0.3) λειτουργεί ως server, ενώ άλλοι workers χρήσιμοποιούνται ως clients.
 
+image::images/SSHBruteForce/check_ssh_port.png[]
+image::images/SSHBruteForce/user.png[]
+image::images/SSHBruteForce/pass.png[]
+image::images/SSHBruteForce/hydra_brute_force.png[]
+image::images/SSHBruteForce/auth.logERROR.png[]
+image::images/SSHBruteForce/Fail2Ban_works.png[]
+image::images/SSHBruteForce/failed_pass_auth.png[]
+image::images/SSHBruteForce/jailLocalFile.png[]
+image::images/SSHBruteForce/fail2ban_client_status_before.png[]
+image::images/SSHBruteForce/fail2ban_client_status.png[]
+image::images/SSHBruteForce/fail2ban_client_status_after.png[]
+image::images/SSHBruteForce/iptables_rule_fail2ban.png[]
+image::images/SSHBruteForce/ssh_attacker_connection_refused.png[]
+image::images/SSHBruteForce/unban_worker.png[]
+image::images/SSHBruteForce/ssh-keygen.png[]
+image::images/SSHBruteForce/ssh-copy-id.png[]
+image::images/SSHBruteForce/new-config-file.png[]
+image::images/SSHBruteForce/keyauthworking.png[]
+image::images/SSHBruteForce/permission-denied-pk.png[]
+image::images/SSHBruteForce/authorized_keys.png[]
+
 == Local/Remote SSH Fowarding
 
 Σε αυτό το ερώτημα θα γίνει Local και Remote SSH Fowarding για την επίτευξη SSH Tunneling. Το Tunneling δημιουργεί μια σύνδεση που προσφέρει ασφαλή και κρυπτογραφημένη επικοινωνία μεταξύ του client και server. Μπορεί να χρησιμοποιήθει για πολλούς σκοπούς, μιας και με το tunneling γίνεται ασφαλής ανταλλαγή δεδομένων μεταξύ δύο αποκρυνσμένων υπολογιστών/δικτύων.
@@ -321,15 +354,15 @@ lynx localhost:8081
 
 NOTE: Έαν έχουμε IPv6 διεύθυνση στον server μας, μπορούμε να χρησιμοποιήσουμε την παράμετρο *-4* στην *ssh* εντολή που δώσαμε ώστε να δουλέψει με την IPv4 διεύθυνση, αλλίως μπορεί να εμφανιστεί error *bind: Cannot assign requested address*.
 
-=== Remote SSH Port Fowarding
-Πρόκειται για την αντίστροφη ακριβώς διαδικασία. Κάνουμε Remote SSH Port Fowarding όταν έχουμε πρόσβαση σε δεδομένα/υπηρεσία και θέλουμε να την μοιράσουμε με άλλους. Στην περίπτωση μας θα πάμε στον Web Server μας και θα εκτελέσουμε την παρακάτω εντολή:
+=== Remote SSH Port Forwarding
+Πρόκειται για την αντίστροφη ακριβώς διαδικασία. Κάνουμε Remote SSH Port Forwarding όταν έχουμε πρόσβαση σε δεδομένα/υπηρεσία και θέλουμε να την μοιράσουμε με άλλους. Στην περίπτωση μας θα πάμε στον Web Server μας και θα εκτελέσουμε την παρακάτω εντολή:
 ```
 ssh -nNT -R 8081:localhost:80 user@<IP-address>
 ```
 
 Με την παραπάνω εντολή λέμε ότι έχουμε πρόσβαση στην υπηρεσία (localhost:80) και όποιος επιθυμεί να έχει πρόσβαση να έρθει σε εμένα (user@<IP-address>) μέσω της πόρτας 8081. Αυτό επιτρέπει σε οποιονδήποτε να έχει πρόσβαση στην υπηρεσία μέσω της 8081 του Web Server μας, που σε αυτή την περίπτωση φιλοξενεί και την ιστοσελίδα.
 
-Πρέπει όμως και να έχουμε ανοιχτή την πύλη 8081 για να μπορέσουμε να λάβουμε τα requests. Το SSH προσφέρει την δυνατότητα να ακούμε από έξω στις πύλες που ορίζουμε με το Remote SSH Port Fowarding. Για να μπορεί να λειτουργήσει σωστά το remote fowarding, πρέπει να ανοίξουμε το αρχείο *sshd_config*:
+Πρέπει όμως και να έχουμε ανοιχτή την πύλη 8081 για να μπορέσουμε να λάβουμε τα requests. Το SSH προσφέρει την δυνατότητα να ακούμε από έξω στις πύλες που ορίζουμε με το Remote SSH Port Forwarding. Για να μπορεί να λειτουργήσει σωστά το remote forwarding, πρέπει να ανοίξουμε το αρχείο *sshd_config*:
 ```
 sudo vim /etc/ssh/sshd_config
 ```
@@ -348,6 +381,21 @@ lynx <IP-address>:8081
 Και τελικά με τις παραπάνω εντολές παίρνουμε το περιεχόμενο του index.html από τον Web Server μας.
 
 TIP: Για μεγαλύτερη ασφάλεια μπορούμε να ορίσουμε GatewayPorts *clientspecified* ώστε να μπορούμε να δεχόμαστε συνδέσεις σε μια θύρα μόνο από συγκεκριμένες διευθύνσεις και βάζοντας την IP του client που θέλουμε πρίν το port στο οποίο ακούμε, για παράδειγμα *ssh -nNT -R <safe-IP>:8081:localhost:80 user@<IP-address>*.
+
+=== Στιγμιότυπα οθόνης από Local/Remote SSH Port Forwarding
+
+Παρακάτω εμφανίζονται στιγμιότυπα οθόνης από Local/Remote SSH Port Forwarding όπως περιγράφονται παραπάνω:
+
+image::images/SSHPortForwarding/usurifconfig.png[]
+image::images/SSHPortForwarding/openportsusur.png[]
+image::images/SSHPortForwarding/htmlcontent.png[]
+image::images/SSHPortForwarding/worker2_L_SSH_PF.png[]
+image::images/SSHPortForwarding/worker2_curl.png[]
+image::images/SSHPortForwarding/worker2_lynx.png[]
+image::images/SSHPortForwarding/usur_R_SSH_PF.png[]
+image::images/SSHPortForwarding/GatewayPorts.png[]
+image::images/SSHPortForwarding/curl_remote_pf.png[]
+image:images/SSHPortForwarding/lynx_remote_pf.png[]
 
 == Δημιουργία VPN
 Η δημιουργία VPN (Virtual Private Network) επιτρέπει την σύνδεση απομακρυσμένων δικτύων σε ένα εικονικό δίκτυο. Αυτό προσφέρει ασφάλεια στην επικοινωνία ανάμεσα των δυο δικτύων. Χρησιμοποιείται πολύ εκτός από την ασφάλεια από πολλούς βασικούς χρήστες για ανωνυμία και προστασία των προσωπικών τους δεδομένων. Η σύνδεση γίνεται πάνω στον VPN Server. Στο παρακάτω ζητούμενο θα αναλυθεί η δημιουργία του VPN Server πάνω στον υπολογιστή μας καθώς και πως μπορούν χρήστες που βρίσκονται σε άλλα δίκτυα, στην περίπτωση μας οι κόμβοι του swarm να συνδεθούν και να εμφανίζονται σαν μέλη του δικτύου μας.
@@ -466,7 +514,7 @@ vpn_data=$PWD/openvpn-services/
 docker=registry.vlabs.uniwa.gr:5080/myownvpn
 
 rm -f $vpn_data/pki/reqs/$CLIENTNAME.req
-rm -f $vpn_data/pki/private/$CLIENTNAME.key
+rm -f $vpn_data/pki/private/$CLIENTNAME.keyVP
 rm -f $vpn_data/pki/issued/$CLIENTNAME.crt
 rm -f $vpn_data/server/ccd/$CLIENTNAME
 rm -f $vpn_data/ccd/$CLIENTNAME
@@ -487,3 +535,17 @@ TIP: Βάζουμε για CLIENTNAME το όνομα του χρήστη που
 sudo ./rm-user.sh
 ```
 === Στιγμιότυπα οθόνης από δημιουργία VPN στο swarm
+
+image::images/VPN/create-vpn.sh.png[]
+image::images/VPN/create-vpn2.sh.png[]
+image::images/VPN/ca_creation.png[]
+image::images/VPN/swarmlab-vpn-services-up.png[]
+image::images/VPN/create-user.sh.png[]
+image::images/VPN/create-user.sh2.png[]
+image::images/VPN/serverIP.png[]
+image::images/VPN/testusermaster.ovpn.png[]
+image::images/VPN/ovpn_config.png[]
+image::images/VPN/ifconfig_vpn.png[]
+image::images/VPN/viewclients.png[]
+image::images/VPN/rm-user.sh.png[]
+image::images/VPN/rm-user.sh2.png[]
