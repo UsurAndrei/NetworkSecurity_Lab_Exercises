@@ -1,9 +1,9 @@
 = Ασφάλεια Δικτύων και Επικοινωνιών
 Ρούσου Αντρέι - 711171075 - cs171075@uniwa.gr
-:toc:
+:toc: left
 
 == Εισαγωγή και Περιγραφή
-[INFO]
+
 Τα παρακάτω ζητούμενα υλοποιούνται σε Ubuntu 20.04.1 LTS Virtual Machine. Τα λογισμικά που απαιτήθηκαν για το περιβάλλον εργασίας είναι Docker και το swarmlab-sec για την δημιουργία ενός swarm cluster.
 
 === Docker 
@@ -118,7 +118,7 @@ image::images/DDoS/gettinginworker1.png[]
 image::images/DDoS/worker1_hping.png[]
 image::images/DDoS/worker2_hping.png[]
 image::images/DDoS/tcpdump.png[]
-image::images/DDoS/tcpdump_p22.pngp[]
+image::images/DDoS/tcpdump_p22.png[]
 image::images/DDoS/tcpdumpSYN.png[]
 image::images/DDoS/iptablesblocked.png[]
 image::images/DDoS/iptablesblocked_packets.png[]
